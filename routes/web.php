@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Apicontroller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Apicontroller;
 
 
 /*
@@ -18,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->to("/admin");
 });
+
+Route::get('/report-download/{from}/{to}/{reporttype}', [Apicontroller::class, 'reportdownload'])->name('report-download');
+

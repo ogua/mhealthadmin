@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
-use App\Models\Appointments;
 use App\Models\Lab;
-use App\Models\Measurement;
-use App\Models\Medication;
-use App\Models\Support;
-use App\Models\Symptoms;
 use App\Models\User;
+use App\Models\Support;
+use App\Models\Activity;
+use App\Models\Symptoms;
+use App\Models\Medication;
+use App\Models\Measurement;
+use App\Models\Appointments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -564,6 +564,44 @@ class Apicontroller extends Controller
 
                 logger($data);
             }
+            
+            
+        }
+
+
+
+        public function reportdownload($from,$to,$reporttype) 
+        {
+            if ($reporttype == "Symptoms") {
+                $data = Symptoms::whereBetween('created_at',[$from,$to])->latest()->get();
+            }
+            
+            if ($reporttype == "Measurement") {
+                $data = Measurement::whereBetween('created_at',[$from,$to])->latest()->get();
+            }
+            
+            if ($reporttype == "Medication") {
+                $data = Medication::whereBetween('created_at',[$from,$to])->latest()->get();
+            }
+            
+            if ($reporttype == "Activities") {
+                $data = Activity::whereBetween('created_at',[$from,$to])->latest()->get();
+            }
+
+            if ($reporttype == "Lab") {
+                $data = Lab::whereBetween('created_at',[$from,$to])->latest()->get();
+            }
+
+            if ($reporttype == "Appointment") {
+                $data = Appointments::whereBetween('created_at',[$from,$to])->latest()->get();
+            }
+            
+            if ($reporttype == "Support") {
+                $data = Support::whereBetween('created_at',[$from,$to])->latest()->get();
+            }
+
+
+            return view('report',compact('data','from','to','reporttype'));
             
             
         }
